@@ -5,10 +5,31 @@
 #######################################################
 
 def urlchecker(url):
-
-    # your code should go here
-
-    return True
+  brokenURL = (url.split('://'))[1]
+  scheme = (url.split('://'))[0]
+  if scheme != "http" and scheme != "https":
+    return False 
+  if url.count('?') > 1 and url.count('#') > 1:
+    return False
+  if url.count(' ') > 0:
+    return False
+  if url.count('?') == 1 and url.count('#') == 1:
+    if url.find('?') < url.find('#'):
+      return False
+  if brokenURL.find('/') == -1:
+    return False
+  if brokenURL.count('/') == 1 and brokenURL.count(':') == 1:
+    if brokenURL.find('/') < brokenURL.find(':'):
+      return False
+  if brokenURL.count(':') == 1:
+    port = (((brokenURL.split(':'))[1]).split('/'))[0]
+    for char in port:
+      if char.isdigit() == False:
+        return False
+  hostName = (brokenURL.split('/'))[0]
+  if len(hostName) < 0:
+    return False 
+  return True
 
 
 def testurl():
@@ -38,3 +59,4 @@ def testurl():
         else:
             print(f"{url} - ok")
 
+testurl()
